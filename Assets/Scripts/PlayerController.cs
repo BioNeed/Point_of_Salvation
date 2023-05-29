@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -7,24 +5,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private float _rotSpeed;
     [SerializeField] private CharacterController _charController;
+    [SerializeField] private PreDialogue _preDialogue;
 
     private Vector3 _moveDirection;
     private Quaternion _qRotation;
-    private int _soulLayer;
-    private bool _isSoulNearby;
-    private SoulController _soulController;
-    private TextAsset _inkJSON;
+    private bool _isSoulNearby = false;
+    private bool _inDialogue = false;
+    private Soul _soulController;
 
     private void Start()
     {
         _isSoulNearby = false;
         _soulController = null;
-        _soulLayer = LayerMask.NameToLayer("Soul");
     }
 
     private void Update()
     {
-        if (DialogueManager.GetInstance().IsDialoguePlaying || DialogueManager.GetInstance().IsJournalOpen)
+        if (DialogueManager.GetInstance().IsDialoguePlaying)
         {
             _charController.Move(Vector3.zero);
             transform.rotation = _qRotation;
@@ -42,19 +39,26 @@ public class PlayerController : MonoBehaviour
         transform.rotation = _qRotation;
         _charController.Move(_moveDirection);
 
-        if (Input.GetButtonDown("Jump") && _isSoulNearby)
+        if (Input.GetButtonDown("Jump") && _isSoulNearby && _inDialogue == false)
         {
+            _inDialogue = true;
             _soulController.DialogIndicatorOff();
-            _inkJSON = _soulController.GetInkFile();
-            DialogueManager.GetInstance().EnterDialogueMode(_soulController, _inkJSON);
+            _preDialogue.StartPreDialogue(_soulController);
         }
+    }
+
+    public void StopDialogue()
+    {
+        _inDialogue = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!_isSoulNearby || other.gameObject.layer == _soulLayer)
+        if (_isSoulNearby == false && 
+            other.TryGetComponent(out Soul soul) == true && 
+            soul.CanTalk == true)
         {
-            _soulController = other.GetComponent<SoulController>();
+            _soulController = soul;
             _soulController.DialogIndicatorOn();
             _isSoulNearby = true;
         }
@@ -62,9 +66,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        _soulController.DialogIndicatorOff();
+        _soulController?.DialogIndicatorOff();
         _soulController = null;
         _isSoulNearby = false;
     }
-    
 }

@@ -1,32 +1,18 @@
+using Ink.Runtime;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
-using Ink.Runtime;
-
-public enum Fate
-{
-    BurnInHell = -9,
-    NoPurification = -6,
-    SlightSinner = -3,
-    DeservePurification = 3,
-    GoodFellow = 6,
-    Righteous = 9,
-}
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField] private SceneController _sceneController;
-    [SerializeField] private GameObject _portraitPanel;
-
     [Header("Dialogue UI")]
     [SerializeField] private GameObject _dialoguePanel;
     [SerializeField] private TextMeshProUGUI _dialogueText;
     [SerializeField] private GameObject _factPanel;
     [SerializeField] private TextMeshProUGUI _factText;
-    
+
     [Header("Choices UI")]
     [SerializeField] private GameObject[] _choices;
 
@@ -35,40 +21,36 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Journal")]
     [SerializeField] private GameObject _journalPanel;
-    [SerializeField] private Transform _sinTransform;
-    [SerializeField] private Transform _virtueTransform;
-    [SerializeField] private GameObject _sinPrefab;
-    [SerializeField] private GameObject _virtuePrefab;
+    [SerializeField] private FateJournal _fateJournal;
 
-    private SoulController _dialogueSoul;
+    private Soul _dialogueSoul;
     private TextMeshProUGUI[] _choicesText;
     private Story _currentStory;
     private static DialogueManager _instance;
-    private Vector3 _deedOffset = new Vector3(0, -50, 0);
     private List<Deed> _sinsFound = new List<Deed>();
     private List<Deed> _virtuesFound = new List<Deed>();
+    
     public bool IsDialoguePlaying { get; private set; }
-    public bool IsJournalOpen { get; private set; }
 
     private void Awake()
     {
-        if (_instance != null )
+        if (_instance != null)
         {
             Debug.LogWarning("Found more than one Dialogue Manager in the scene");
         }
+
         _instance = this;
     }
 
     private void Start()
     {
         IsDialoguePlaying = false;
-        IsJournalOpen = false;
         _dialoguePanel.SetActive(false);
         _factPanel.SetActive(false);
         _journalPanel.SetActive(false);
         _choicesText = new TextMeshProUGUI[_choices.Length];
         int index = 0;
-        foreach(GameObject choice in _choices)
+        foreach (GameObject choice in _choices)
         {
             _choicesText[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
             choice.SetActive(false);
@@ -78,7 +60,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if (!IsDialoguePlaying)
+        if (IsDialoguePlaying == false || _currentStory?.currentChoices.Count != 0)
         {
             return;
         }
@@ -94,7 +76,7 @@ public class DialogueManager : MonoBehaviour
         return _instance;
     }
 
-    public void EnterDialogueMode(SoulController soul, TextAsset inkJSON)
+    public void EnterDialogueMode(Soul soul, TextAsset inkJSON)
     {
         _dialogueSoul = soul;
         _currentStory = new Story(inkJSON.text);
@@ -104,6 +86,7 @@ public class DialogueManager : MonoBehaviour
         _factText.text = "";
         _sinsFound.Clear();
         _virtuesFound.Clear();
+        ContinueStory();
     }
 
     private IEnumerator ExitDialogueMode()
@@ -114,8 +97,11 @@ public class DialogueManager : MonoBehaviour
         _dialoguePanel.SetActive(false);
         _dialogueText.text = "";
         _factPanel.SetActive(false);
+        
+        _dialogueSoul.StopTalking();
 
-        EnterJournalMode();
+        _journalPanel.SetActive(true);
+        _fateJournal.OpenJournal(_dialogueSoul.SoulFacts, _sinsFound, _virtuesFound);
     }
 
     private void ContinueStory()
@@ -171,7 +157,7 @@ public class DialogueManager : MonoBehaviour
             Debug.LogError("More choices were than the UI can support. Number of choices given: " + currentChoices.Count);
         }
 
-        _choices[index].gameObject.SetActive(true);
+        _choices[index].SetActive(true);
         _choicesText[index].text = currentChoices[index].text;
 
         StartCoroutine(SelectNewChoice(index));
@@ -187,15 +173,16 @@ public class DialogueManager : MonoBehaviour
         }
 
         int index = 0;
-        foreach(Choice choice in currentChoices)
+        foreach (Choice choice in currentChoices)
         {
             _choices[index].SetActive(true);
             _choicesText[index].text = choice.text;
             index++;
         }
+
         for (int i = index; i < _choices.Length; i++)
         {
-            _choices[i].gameObject.SetActive(false);
+            _choices[i].SetActive(false);
         }
 
         StartCoroutine(SelectFirstChoice());
@@ -205,16 +192,16 @@ public class DialogueManager : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(null);
         yield return new WaitForEndOfFrame();
-        EventSystem.current.SetSelectedGameObject(_choices[index].gameObject);
+        EventSystem.current.SetSelectedGameObject(_choices[index]);
     }
 
     private IEnumerator SelectFirstChoice()
     {
         EventSystem.current.SetSelectedGameObject(null);
         yield return new WaitForEndOfFrame();
-        EventSystem.current.SetSelectedGameObject(_choices[0].gameObject);
+        EventSystem.current.SetSelectedGameObject(_choices[0]);
     }
-    
+
     public void MakeChoice(int choiceIndex)
     {
         _currentStory.ChooseChoiceIndex(choiceIndex);
@@ -223,7 +210,7 @@ public class DialogueManager : MonoBehaviour
 
     private void OnGUI()
     {
-        if (Event.current.type == EventType.MouseDown)
+        if (Event.current.type == EventType.MouseDown && _clickableWords.Count != 0)
         {
             int charIndex = TMP_TextUtilities.FindIntersectingCharacter(_dialogueText, Input.mousePosition, null, true);
             for (int i = 0; i < _clickableWords.Count; i++)
@@ -254,42 +241,4 @@ public class DialogueManager : MonoBehaviour
             }
         }
     }
-
-    private void EnterJournalMode()
-    {
-        _portraitPanel.SetActive(false);
-        IsJournalOpen = true;
-        _journalPanel.SetActive(true);
-        ShowFoundedDeeds();
-    }
-
-    private void ShowFoundedDeeds()
-    {
-        for (int i = 0; i < _sinsFound.Count; i++)
-        {
-            GameObject sin = Instantiate(_sinPrefab, _sinTransform.position + _deedOffset * i, Quaternion.identity, _sinTransform);
-            TextMeshProUGUI[] text = sin.GetComponentsInChildren<TextMeshProUGUI>();
-            text[0].text = _virtuesFound[i].GetDescription();
-        }
-        for (int i = 0; i < _virtuesFound.Count; i++)
-        {
-            GameObject virtue = Instantiate(_virtuePrefab, _virtueTransform.position + _deedOffset * i, Quaternion.identity, _virtueTransform);
-            TextMeshProUGUI[] text = virtue.GetComponentsInChildren<TextMeshProUGUI>();
-            text[0].text = _virtuesFound[i].GetDescription();
-        }
-    }
-
-    public void ChooseFate(Fate fate)
-    {
-
-    }
-
-    private void ExitJournalMode()
-    {
-        _dialogueSoul = null;
-
-        _journalPanel.SetActive(false);
-        _portraitPanel.SetActive(true);
-    }
-    
 }
