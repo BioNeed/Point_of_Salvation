@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
             other.TryGetComponent(out Soul soul) == true && 
             soul.CanTalk == true)
         {
+            Debug.Log("OnTriggerEnter");
             _soulController = soul;
             _soulController.DialogIndicatorOn();
             _isSoulNearby = true;

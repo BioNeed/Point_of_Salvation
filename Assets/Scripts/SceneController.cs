@@ -4,6 +4,7 @@ using UnityEngine;
 public class SceneController : MonoBehaviour
 {
     [SerializeField] private PortraitPanel _portraitPanel;
+    [SerializeField] private ExperienceProgress _experienceProgress;
     [SerializeField] private List<Soul> _soulsList;
 
     private Soul _currentSoul;
@@ -32,5 +33,6 @@ public class SceneController : MonoBehaviour
         _soulIndex++;
         _currentSoul = _soulsList[_soulIndex];
         _portraitPanel.DisplaySoulPortret(_currentSoul);
+        _experienceProgress.GainExperienceForSoul();
     }
 }
