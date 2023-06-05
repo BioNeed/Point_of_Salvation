@@ -62,7 +62,7 @@ public class FateJournal : MonoBehaviour
         {
             GameObject sin = Instantiate(_sinPrefab, _sinTransform.position + _deedOffset * i, Quaternion.identity, _sinTransform);
             TextMeshProUGUI[] text = sin.GetComponentsInChildren<TextMeshProUGUI>();
-            text[0].text = _virtuesFound[i].GetDescription();
+            text[0].text = _sinsFound[i].GetDescription();
         }
         for (int i = 0; i < _virtuesFound.Count; i++)
         {
