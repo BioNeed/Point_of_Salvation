@@ -120,7 +120,6 @@ public class DialogueManager : MonoBehaviour
                 if (tag.StartsWith("KeyWord."))
                 {
                     string keyWord = tag.Substring("KeyWord.".Length, tag.Length - "KeyWord.".Length);
-                    Debug.Log("keyWord - " + keyWord);
                     _clickableWords.Add(keyWord);
                 }
                 else if (tag.StartsWith("Fact."))
@@ -224,7 +223,6 @@ public class DialogueManager : MonoBehaviour
                 {
                     if (charIndex == pos)
                     {
-                        Debug.Log("Found! clicked word - " + _clickableWords[i]);
                         DisplayChoice(i);
                         string temp = _dialogueText.text;
                         _dialogueText.text = "";
