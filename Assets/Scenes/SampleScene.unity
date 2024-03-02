@@ -5824,9 +5824,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041E\u043D\u0430 \u043D\u0435\u043D\u0430\u0432\u0438\u0434\u0438\u0442
-    \u0441\u0432\u043E\u044E \u0441\u0435\u0441\u0442\u0440\u0443 \u0438 \u0436\u0435\u043B\u0430\u043B\u0430
-    \u043F\u0440\u0438\u0447\u0438\u043D\u0438\u0442\u044C \u0435\u0439 \u0431\u043E\u043B\u044C"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d2213015dfd6bc3429985eb349135cbd, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6047,7 +6045,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1611600850
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8067,7 +8065,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5079121902470347240, guid: 3c64f90e7bfd4fb4088d103d9f9d1277, type: 3}
       propertyPath: _soulFacts._factsOffContext.Array.data[0]
-      value: "\u0424\u0430\u043A\u0442 \u043F\u0440\u043E \u041F\u043E\u043B\u0430"
+      value: "\u041F\u043E\u043B \u043E\u0447\u0435\u043D\u044C \u0440\u0430\u0441\u043A\u0430\u0438\u0432\u0430\u0435\u0442\u0441\u044F
+        \u0438 \u0436\u0430\u043B\u0435\u0435\u0442 \u043E \u0442\u043E\u043C, \u0447\u0442\u043E
+        \u0441\u0434\u0435\u043B\u0430\u043B"
       objectReference: {fileID: 0}
     - target: {fileID: 5079121902470347240, guid: 3c64f90e7bfd4fb4088d103d9f9d1277, type: 3}
       propertyPath: _soulFacts._virtues.Array.data[0]._weight
