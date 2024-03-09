@@ -4,7 +4,7 @@ using UnityEngine;
 public class ResultPanel : MonoBehaviour
 {
     [SerializeField] private SceneController _sceneController;
-    [SerializeField] private PlayerController _playerController;
+    [SerializeField] private DialogueState _dialogueState;
     [SerializeField] private GameObject _resultPanel;
     [SerializeField] private TextMeshProUGUI _resultText;
 
@@ -21,7 +21,7 @@ public class ResultPanel : MonoBehaviour
         {
             _resultPanel.SetActive(false);
             _isPanelActive = false;
-            _playerController.Invoke(nameof(_playerController.StopDialogue), 0.2f);
+            _dialogueState.Invoke(nameof(_dialogueState.FinishDialogue), 0.2f);
             _sceneController.NextSoul();
         }
     }
@@ -41,7 +41,7 @@ public class ResultPanel : MonoBehaviour
             resulText = "Неверно. ";
         }
 
-        string rightDesicion = ConvertFateToString(rightFate);
+        var rightDesicion = ConvertFateToString(rightFate);
         resulText += "Правильным решением было " + rightDesicion;
 
         _resultText.text = resulText;

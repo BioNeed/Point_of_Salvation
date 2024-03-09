@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MessagePanel : MonoBehaviour
 {
-    [SerializeField] private PlayerController _playerController;
+    [SerializeField] private DialogueState _dialogueState;
     [SerializeField] private GameObject _messagePanel;
     [SerializeField] private TextMeshProUGUI _messageText;
 
@@ -20,7 +20,7 @@ public class MessagePanel : MonoBehaviour
         {
             _opened = false;
             _messagePanel.SetActive(false);
-            _playerController.Invoke(nameof(_playerController.StopDialogue), 0.2f);
+            _dialogueState.Invoke(nameof(_dialogueState.FinishDialogue), 0.2f);
         }
     }
 

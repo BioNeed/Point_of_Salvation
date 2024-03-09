@@ -23,14 +23,14 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject _journalPanel;
     [SerializeField] private FateJournal _fateJournal;
 
+    [SerializeField] private DialogueState _dialogueState;
+
     private Soul _dialogueSoul;
     private TextMeshProUGUI[] _choicesText;
     private Story _currentStory;
     private static DialogueManager _instance;
-    private List<Deed> _sinsFound = new List<Deed>();
-    private List<Deed> _virtuesFound = new List<Deed>();
-    
-    public bool IsDialoguePlaying { get; private set; }
+    private readonly List<Deed> _sinsFound = new ();
+    private readonly  List<Deed> _virtuesFound = new ();
 
     private void Awake()
     {
@@ -44,7 +44,6 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        IsDialoguePlaying = false;
         _dialoguePanel.SetActive(false);
         _factPanel.SetActive(false);
         _journalPanel.SetActive(false);
@@ -60,7 +59,8 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if (IsDialoguePlaying == false || _currentStory?.currentChoices.Count != 0)
+        if (!_dialogueState.IsDialoguePlaying 
+                || _currentStory?.currentChoices.Count != 0)
         {
             return;
         }
@@ -80,7 +80,7 @@ public class DialogueManager : MonoBehaviour
     {
         _dialogueSoul = soul;
         _currentStory = new Story(inkJSON.text);
-        IsDialoguePlaying = true;
+        _dialogueState.EnterDialogue();
         _dialoguePanel.SetActive(true);
         _factPanel.SetActive(true);
         _factText.text = "";
@@ -93,7 +93,7 @@ public class DialogueManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
 
-        IsDialoguePlaying = false;
+        _dialogueState.FinishDialogue();
         _dialoguePanel.SetActive(false);
         _dialogueText.text = "";
         _factPanel.SetActive(false);

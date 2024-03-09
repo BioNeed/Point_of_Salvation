@@ -21,7 +21,7 @@ public class Soul : MonoBehaviour
 
     private void Start()
     {
-        SkinnedMeshRenderer renderer = GetComponent<SkinnedMeshRenderer>();
+        var renderer = GetComponent<SkinnedMeshRenderer>();
         _material = renderer.material;
         _startColor = _material.color;
         _dialogIndicator.SetActive(false);

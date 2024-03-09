@@ -26,8 +26,8 @@ public class FateJournal : MonoBehaviour
     [SerializeField] private GameObject _virtuePrefab;
 
     private Vector3 _deedOffset = new Vector3(0, -100, 0);
-    private List<Deed> _sinsFound = new List<Deed>();
-    private List<Deed> _virtuesFound = new List<Deed>();
+    private List<Deed> _sinsFound = new ();
+    private List<Deed> _virtuesFound = new ();
     private SoulFacts _soulFacts;
 
     public void OpenJournal(SoulFacts soulFacts, List<Deed> sinsFound, List<Deed> virtuesFound)
