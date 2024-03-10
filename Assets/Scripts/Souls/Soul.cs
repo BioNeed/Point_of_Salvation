@@ -87,7 +87,7 @@ public class Soul : MonoBehaviour
         return _soulFacts.GetVirtue(index);
     }
 
-    public void StopTalking()
+    public void DisableTalking()
     {
         _canTalk = false;
     }

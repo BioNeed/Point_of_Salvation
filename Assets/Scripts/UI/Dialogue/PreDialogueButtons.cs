@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UI.Dialogue
 {
-    public class PreDialogueFinishingButtons : MonoBehaviour
+    public class PreDialogueButtons : MonoBehaviour
     {
-        [SerializeField] private DialogueState _dialogueState;
+        [SerializeField] private PlayerState _playerState;
         [SerializeField] private MessagePanel _messagePanel;
         [SerializeField] private SceneController _sceneController;
         [SerializeField] private PreDialogue _preDialogue;
@@ -15,17 +15,17 @@ namespace Assets.Scripts.UI.Dialogue
 
         private Soul _soul;
 
+        public void InitializePreDialogueFinishingButtons(Soul soul)
+        {
+            _soul = soul;
+            ToggleButtons(true);
+        }
+
         private void Start()
         {
             _startDialogueButton.onClick.AddListener(OnStartDialogueButtonClicked);
             _exitPreDialogueButton.onClick.AddListener(OnExitPreDialogueButtonClicked);
             ToggleButtons(false);
-        }
-
-        public void InitializePreDialogueFinishingButtons(Soul soul)
-        {
-            _soul = soul;
-            ToggleButtons(true);
         }
 
         private void OnStartDialogueButtonClicked()
@@ -46,8 +46,8 @@ namespace Assets.Scripts.UI.Dialogue
         private void OnExitPreDialogueButtonClicked()
         {
             _preDialogue.TogglePreDialogue(false);
-            _dialogueState.Invoke(nameof(_dialogueState.FinishDialogue), 0.2f);
             ToggleButtons(false);
+            _playerState.FreePlayer();
         }
 
         private IEnumerator StartDialogue()

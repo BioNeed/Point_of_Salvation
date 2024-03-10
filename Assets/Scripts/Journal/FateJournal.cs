@@ -16,6 +16,7 @@ public enum Fate
 
 public class FateJournal : MonoBehaviour
 {
+    [SerializeField] private PlayerState _playerState;
     [SerializeField] private ResultPanel _resultPanel;
 
     [Header("Journal")]
@@ -26,12 +27,13 @@ public class FateJournal : MonoBehaviour
     [SerializeField] private GameObject _virtuePrefab;
 
     private Vector3 _deedOffset = new Vector3(0, -100, 0);
-    private List<Deed> _sinsFound = new ();
-    private List<Deed> _virtuesFound = new ();
+    private List<Deed> _sinsFound = new List<Deed>();
+    private List<Deed> _virtuesFound = new List<Deed>();
     private SoulFacts _soulFacts;
 
     public void OpenJournal(SoulFacts soulFacts, List<Deed> sinsFound, List<Deed> virtuesFound)
     {
+        _playerState.EnterJournal();
         _soulFacts = soulFacts;
         _sinsFound = sinsFound;
         _virtuesFound = virtuesFound;
@@ -45,6 +47,11 @@ public class FateJournal : MonoBehaviour
         bool isPLayerRight = CheckResult((Fate)fateValue, out Fate rightFate);
         _resultPanel.OpenResultPanel(rightFate, isPLayerRight);
 
+        _journalPanel.SetActive(false);
+    }
+
+    private void Start()
+    {
         _journalPanel.SetActive(false);
     }
 

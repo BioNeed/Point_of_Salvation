@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour
 {
+    [SerializeField] private PlayerState _playerState;
+
     [Header("Dialogue UI")]
     [SerializeField] private GameObject _dialoguePanel;
     [SerializeField] private TextMeshProUGUI _dialogueText;
@@ -20,17 +22,14 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private List<string> _clickableWords = new List<string>();
 
     [Header("Journal")]
-    [SerializeField] private GameObject _journalPanel;
     [SerializeField] private FateJournal _fateJournal;
-
-    [SerializeField] private DialogueState _dialogueState;
 
     private Soul _dialogueSoul;
     private TextMeshProUGUI[] _choicesText;
     private Story _currentStory;
     private static DialogueManager _instance;
-    private readonly List<Deed> _sinsFound = new ();
-    private readonly  List<Deed> _virtuesFound = new ();
+    private readonly List<Deed> _sinsFound = new List<Deed>();
+    private readonly  List<Deed> _virtuesFound = new List<Deed>();
 
     private void Awake()
     {
@@ -46,7 +45,6 @@ public class DialogueManager : MonoBehaviour
     {
         _dialoguePanel.SetActive(false);
         _factPanel.SetActive(false);
-        _journalPanel.SetActive(false);
         _choicesText = new TextMeshProUGUI[_choices.Length];
         int index = 0;
         foreach (GameObject choice in _choices)
@@ -59,7 +57,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if (!_dialogueState.IsDialoguePlaying 
+        if (!_playerState.IsInDialogue 
                 || _currentStory?.currentChoices.Count != 0)
         {
             return;
@@ -78,9 +76,9 @@ public class DialogueManager : MonoBehaviour
 
     public void EnterDialogueMode(Soul soul, TextAsset inkJSON)
     {
+        _playerState.EnterDialogue();
         _dialogueSoul = soul;
         _currentStory = new Story(inkJSON.text);
-        _dialogueState.EnterDialogue();
         _dialoguePanel.SetActive(true);
         _factPanel.SetActive(true);
         _factText.text = "";
@@ -89,18 +87,22 @@ public class DialogueManager : MonoBehaviour
         ContinueStory();
     }
 
+    public void MakeChoice(int choiceIndex)
+    {
+        _currentStory.ChooseChoiceIndex(choiceIndex);
+        ContinueStory();
+    }
+
     private IEnumerator ExitDialogueMode()
     {
         yield return new WaitForSeconds(0.2f);
 
-        _dialogueState.FinishDialogue();
         _dialoguePanel.SetActive(false);
         _dialogueText.text = "";
         _factPanel.SetActive(false);
         
-        _dialogueSoul.StopTalking();
+        _dialogueSoul.DisableTalking();
 
-        _journalPanel.SetActive(true);
         _fateJournal.OpenJournal(_dialogueSoul.SoulFacts, _sinsFound, _virtuesFound);
     }
 
@@ -199,12 +201,6 @@ public class DialogueManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         yield return new WaitForEndOfFrame();
         EventSystem.current.SetSelectedGameObject(_choices[0]);
-    }
-
-    public void MakeChoice(int choiceIndex)
-    {
-        _currentStory.ChooseChoiceIndex(choiceIndex);
-        ContinueStory();
     }
 
     private void OnGUI()

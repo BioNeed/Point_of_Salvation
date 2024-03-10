@@ -4,7 +4,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private CharacterController _charController;
-    [SerializeField] private DialogueState _dialogueState;
+    [SerializeField] private PlayerState _playerState;
 
     private float _fallingSpeed;
     private Vector3 _moveDirection;
@@ -12,9 +12,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (_dialogueState.IsDialoguePlaying)
+        if (!_playerState.CanMove)
         {
-            DontMoveInDialogue();
+            DontMove();
             return;
         }
 
@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         return horizontalMovement;
     }
 
-    private void DontMoveInDialogue()
+    private void DontMove()
     {
         _charController.Move(Vector3.zero);
         transform.rotation = _qRotation;

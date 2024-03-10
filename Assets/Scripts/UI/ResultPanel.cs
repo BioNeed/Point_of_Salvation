@@ -4,7 +4,7 @@ using UnityEngine;
 public class ResultPanel : MonoBehaviour
 {
     [SerializeField] private SceneController _sceneController;
-    [SerializeField] private DialogueState _dialogueState;
+    [SerializeField] private PlayerState _playerState;
     [SerializeField] private GameObject _resultPanel;
     [SerializeField] private TextMeshProUGUI _resultText;
 
@@ -21,13 +21,14 @@ public class ResultPanel : MonoBehaviour
         {
             _resultPanel.SetActive(false);
             _isPanelActive = false;
-            _dialogueState.Invoke(nameof(_dialogueState.FinishDialogue), 0.2f);
+            _playerState.FreePlayer();
             _sceneController.NextSoul();
         }
     }
 
     public void OpenResultPanel(Fate rightFate, bool rightResult)
     {
+        _playerState.EnterJournalResultPanel();
         _isPanelActive = true;
         _resultPanel.SetActive(true);
 

@@ -3,7 +3,7 @@ using UnityEngine;
 public class DialogueEntering : MonoBehaviour
 {
     [SerializeField] private PreDialogue _preDialogue;
-    [SerializeField] private DialogueState _dialogueState;
+    [SerializeField] private PlayerState _playerState;
 
     private Soul _nearbySoul = null;
 
@@ -11,19 +11,19 @@ public class DialogueEntering : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump") 
                 && _nearbySoul != null 
-                && !_dialogueState.IsDialoguePlaying)
+                && _playerState.CanEnterDialogue)
         {
             _nearbySoul.DialogIndicatorOff();
             _preDialogue.StartPreDialogue(_nearbySoul);
-            _dialogueState.EnterDialogue();
+            _playerState.EnterDialogue();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_nearbySoul == null && 
-            other.TryGetComponent(out Soul soul) == true && 
-            soul.CanTalk == true)
+        if (_nearbySoul == null 
+                && other.TryGetComponent(out Soul soul) == true 
+                && soul.CanTalk == true)
         {
             _nearbySoul = soul;
             _nearbySoul.DialogIndicatorOn();
@@ -32,7 +32,7 @@ public class DialogueEntering : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (_nearbySoul is not null)
+        if (_nearbySoul != null)
         {
             _nearbySoul.DialogIndicatorOff();
         }

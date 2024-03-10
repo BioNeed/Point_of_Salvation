@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PreDialogue : MonoBehaviour
 {
-    [SerializeField] private PreDialogueFinishingButtons _preDialogueFinishingButtons;
+    [SerializeField] private PreDialogueButtons _preDialogueButtons;
 
     [Header("Dialogue UI")]
     [SerializeField] private GameObject _preDialoguePanel;
@@ -59,7 +59,7 @@ public class PreDialogue : MonoBehaviour
         }
         else
         {
-            _preDialogueFinishingButtons.InitializePreDialogueFinishingButtons(_soul);
+            _preDialogueButtons.InitializePreDialogueFinishingButtons(_soul);
         }
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 261.89948, g: 324.4541, b: 429.4325, a: 1}
+  m_IndirectSpecularColor: {r: 262.3369, g: 325.0498, b: 430.21924, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1016,7 +1016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c25557e422aaf4c85c33d25590489d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _preDialogueFinishingButtons: {fileID: 915019330}
+  _preDialogueButtons: {fileID: 915019330}
   _preDialoguePanel: {fileID: 2023159058}
   _preDialogueText: {fileID: 1641829841}
 --- !u!4 &210042132
@@ -1696,50 +1696,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 440810098}
   m_CullTransparentMesh: 1
---- !u!1 &444698005
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 444698006}
-  - component: {fileID: 444698007}
-  m_Layer: 0
-  m_Name: DialogueState
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &444698006
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 444698005}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1339183200}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &444698007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 444698005}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d2180e43f8bd0047acf619283abafd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &453702453
 GameObject:
   m_ObjectHideFlags: 0
@@ -3467,7 +3423,7 @@ GameObject:
   - component: {fileID: 915019329}
   - component: {fileID: 915019330}
   m_Layer: 0
-  m_Name: PreDialogueFinishingButtons
+  m_Name: PreDialogueButtons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3486,7 +3442,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1339183200}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &915019330
 MonoBehaviour:
@@ -3497,10 +3453,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 915019328}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb278a2256afc984fa98b1cb295abbbe, type: 3}
+  m_Script: {fileID: 11500000, guid: 51a7d11b188516d4db827b87b1915912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogueState: {fileID: 444698007}
+  _playerState: {fileID: 1671612741}
   _messagePanel: {fileID: 1002696285}
   _sceneController: {fileID: 672996578}
   _preDialogue: {fileID: 210042131}
@@ -4042,7 +3998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 702ccf2f3564182489f980f0c19bf800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogueState: {fileID: 444698007}
+  _playerState: {fileID: 1671612741}
   _messagePanel: {fileID: 762077354}
   _messageText: {fileID: 2028686794}
 --- !u!1 &1013575707
@@ -4957,7 +4913,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 444698006}
   - {fileID: 915019329}
   m_Father: {fileID: 0}
   m_RootOrder: 12
@@ -5083,7 +5038,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneController: {fileID: 672996578}
-  _dialogueState: {fileID: 444698007}
+  _playerState: {fileID: 1671612741}
   _resultPanel: {fileID: 1248027399}
   _resultText: {fileID: 1202700561}
 --- !u!1 &1392070714
@@ -5471,6 +5426,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1472576190}
   m_CullTransparentMesh: 1
+--- !u!1 &1499808493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1499808494}
+  m_Layer: 0
+  m_Name: JournalObjects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1499808494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499808493}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.580716, y: 1.2737093, z: -1.2274275}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1511077838
 GameObject:
   m_ObjectHideFlags: 0
@@ -5871,6 +5857,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37c085a21793d584aafe03ebf781aa71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerState: {fileID: 1671612741}
   _resultPanel: {fileID: 1390060142}
   _journalPanel: {fileID: 1422137818}
   _sinTransform: {fileID: 464627558}
@@ -6444,6 +6431,7 @@ GameObject:
   - component: {fileID: 1671612736}
   - component: {fileID: 1671612739}
   - component: {fileID: 1671612740}
+  - component: {fileID: 1671612741}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -6589,7 +6577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 8
   _charController: {fileID: 1671612736}
-  _dialogueState: {fileID: 444698007}
+  _playerState: {fileID: 1671612741}
 --- !u!114 &1671612740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6603,7 +6591,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _preDialogue: {fileID: 210042131}
-  _dialogueState: {fileID: 444698007}
+  _playerState: {fileID: 1671612741}
+--- !u!114 &1671612741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671612730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e26b7e36368e11144afbe3e1c22b4ac4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1712044480
 GameObject:
   m_ObjectHideFlags: 0
@@ -7774,6 +7774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21afb92dfcc034d41813556b83e837e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerState: {fileID: 1671612741}
   _dialoguePanel: {fileID: 1611600849}
   _dialogueText: {fileID: 59742585}
   _factPanel: {fileID: 1223408197}
@@ -7783,9 +7784,7 @@ MonoBehaviour:
   - {fileID: 1427562147}
   - {fileID: 986518990}
   _clickableWords: []
-  _journalPanel: {fileID: 1422137818}
   _fateJournal: {fileID: 1559809773}
-  _dialogueState: {fileID: 444698007}
 --- !u!4 &2073593471
 Transform:
   m_ObjectHideFlags: 0
