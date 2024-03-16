@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DialogueManager : MonoBehaviour
+public class Dialogue : MonoBehaviour
 {
     [SerializeField] private PlayerState _playerState;
 
@@ -27,7 +27,7 @@ public class DialogueManager : MonoBehaviour
     private Soul _dialogueSoul;
     private TextMeshProUGUI[] _choicesText;
     private Story _currentStory;
-    private static DialogueManager _instance;
+    private static Dialogue _instance;
     private readonly List<Deed> _sinsFound = new List<Deed>();
     private readonly  List<Deed> _virtuesFound = new List<Deed>();
 
@@ -69,16 +69,16 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public static DialogueManager GetInstance()
+    public static Dialogue GetInstance()
     {
         return _instance;
     }
 
-    public void EnterDialogueMode(Soul soul, TextAsset inkJSON)
+    public void EnterDialogueMode(Soul soul)
     {
         _playerState.EnterDialogue();
         _dialogueSoul = soul;
-        _currentStory = new Story(inkJSON.text);
+        _currentStory = new Story(soul.GetDialogue().text);
         _dialoguePanel.SetActive(true);
         _factPanel.SetActive(true);
         _factText.text = "";
@@ -151,11 +151,11 @@ public class DialogueManager : MonoBehaviour
 
     private void DisplayChoice(int index)
     {
-        List<Choice> currentChoices = _currentStory.currentChoices;
+        var currentChoices = _currentStory.currentChoices;
 
         if (currentChoices.Count > _choices.Length)
         {
-            Debug.LogError("More choices were than the UI can support. Number of choices given: " + currentChoices.Count);
+            Debug.LogError("More choices were found than the UI can support. Number of choices given: " + currentChoices.Count);
         }
 
         _choices[index].SetActive(true);
@@ -170,7 +170,7 @@ public class DialogueManager : MonoBehaviour
 
         if (currentChoices.Count > _choices.Length)
         {
-            Debug.LogError("More choices were than the UI can support. Number of choices given: " + currentChoices.Count);
+            Debug.LogError("More choices were found than the UI can support. Number of choices given: " + currentChoices.Count);
         }
 
         int index = 0;

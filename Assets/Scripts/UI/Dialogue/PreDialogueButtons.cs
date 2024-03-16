@@ -15,17 +15,23 @@ namespace Assets.Scripts.UI.Dialogue
 
         private Soul _soul;
 
-        public void InitializePreDialogueFinishingButtons(Soul soul)
+        public void InitializePreDialogueButtons(Soul soul)
         {
             _soul = soul;
             ToggleButtons(true);
         }
 
-        private void Start()
+        private void OnEnable()
         {
             _startDialogueButton.onClick.AddListener(OnStartDialogueButtonClicked);
             _exitPreDialogueButton.onClick.AddListener(OnExitPreDialogueButtonClicked);
             ToggleButtons(false);
+        }
+
+        private void OnDisable()
+        {
+            _startDialogueButton.onClick.RemoveListener(OnStartDialogueButtonClicked);
+            _exitPreDialogueButton.onClick.RemoveListener(OnExitPreDialogueButtonClicked);
         }
 
         private void OnStartDialogueButtonClicked()
@@ -55,8 +61,7 @@ namespace Assets.Scripts.UI.Dialogue
             yield return new WaitForSeconds(0.2f);
 
             _preDialogue.TogglePreDialogue(false);
-            var inkJSON = _soul.GetDialogue();
-            DialogueManager.GetInstance().EnterDialogueMode(_soul, inkJSON);
+            global::Dialogue.GetInstance().EnterDialogueMode(_soul);
         }
 
         private void ToggleButtons(bool turnOn)

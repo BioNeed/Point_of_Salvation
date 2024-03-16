@@ -2,7 +2,6 @@ using Assets.Scripts.UI.Dialogue;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PreDialogue : MonoBehaviour
 {
@@ -59,7 +58,7 @@ public class PreDialogue : MonoBehaviour
         }
         else
         {
-            _preDialogueButtons.InitializePreDialogueFinishingButtons(_soul);
+            _preDialogueButtons.InitializePreDialogueButtons(_soul);
         }
     }
 }
