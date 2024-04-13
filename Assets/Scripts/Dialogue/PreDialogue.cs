@@ -1,36 +1,22 @@
-using Assets.Scripts.UI.Dialogue;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine;
 
 public class PreDialogue : MonoBehaviour
 {
+    [SerializeField] private PlayerStateMutable _playerState;
     [SerializeField] private PreDialogueButtons _preDialogueButtons;
 
     [Header("Dialogue UI")]
     [SerializeField] private GameObject _preDialoguePanel;
     [SerializeField] private TextMeshProUGUI _preDialogueText;
 
-    private static PreDialogue _instance;
-
     private Soul _soul;
-    private bool _isActive = false;
-    private Story _preDialogue;
-
-    private void Awake()
-    {
-        if (_instance != null)
-        {
-            Debug.LogWarning("Found more than one PreDialogue in the scene");
-        }
-
-        _instance = this;
-        _preDialoguePanel.SetActive(false);
-    }
+    private Story _preDialogueStory;
 
     private void Update()
     {
-        if (_isActive == true && Input.GetButtonDown("Submit"))
+        if (_playerState.IsInPreDialogue == true && Input.GetButtonDown("Submit"))
         {
             ContinuePreDialogue();
         }
@@ -39,22 +25,22 @@ public class PreDialogue : MonoBehaviour
     public void StartPreDialogue(Soul soul)
     {
         _soul = soul;
+        _playerState.EnterPreDialogue();
+        _preDialogueStory = new Story(soul.GetPreDialogue().text);
         TogglePreDialogue(true);
-        _preDialogue = new Story(soul.GetPreDialogue().text);
         ContinuePreDialogue();
     }
 
     public void TogglePreDialogue(bool turnOn)
     {
-        _isActive = turnOn;
         _preDialoguePanel.SetActive(turnOn);
     }
 
     private void ContinuePreDialogue()
     {
-        if (_preDialogue.canContinue)
+        if (_preDialogueStory.canContinue)
         {
-            _preDialogueText.text = _preDialogue.Continue();
+            _preDialogueText.text = _preDialogueStory.Continue();
         }
         else
         {

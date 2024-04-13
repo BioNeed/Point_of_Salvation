@@ -9,9 +9,9 @@ public class SoulFacts
     [SerializeField] private List<Deed> _sins;
     [SerializeField] private List<Deed> _virtues;
 
-    public string GetFact(int index)
+    public Fact GetFact(int index)
     {
-        return _factsOffContext[index];
+        return new Fact(_factsOffContext[index]);
     }
 
     public Deed GetSin(int index)
@@ -26,15 +26,17 @@ public class SoulFacts
 
     public int GetWeightResult()
     {
-        int result = 0;
-        foreach (Deed virtue in _virtues)
+        var result = 0;
+        foreach (var virtue in _virtues)
         {
             result += virtue.GetWeight();
         }
-        foreach (Deed sin in _sins)
+
+        foreach (var sin in _sins)
         {
             result -= sin.GetWeight();
         }
+
         return result;
     }
 }

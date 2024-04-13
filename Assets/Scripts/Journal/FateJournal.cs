@@ -3,43 +3,35 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-[Serializable]
-public enum Fate
-{
-    BurnInHell = -9,
-    NoPurification = -6,
-    SlightSinner = -3,
-    DeservePurification = 0,
-    GoodFellow = 3,
-    Righteous = 6,
-}
-
 public class FateJournal : MonoBehaviour
 {
-    [SerializeField] private PlayerState _playerState;
+    [SerializeField] private DialogueFactView _dialogueFactView;
+    [SerializeField] private DeedsFinding _deedsFinding;
+    [SerializeField] private PlayerStateMutable _playerState;
     [SerializeField] private ResultPanel _resultPanel;
 
     [Header("Journal")]
     [SerializeField] private GameObject _journalPanel;
-    [SerializeField] private Transform _sinTransform;
-    [SerializeField] private Transform _virtueTransform;
+    [SerializeField] private Transform _sinInitialTransform;
+    [SerializeField] private Transform _virtueInitialTransform;
     [SerializeField] private GameObject _sinPrefab;
     [SerializeField] private GameObject _virtuePrefab;
 
-    private Vector3 _deedOffset = new Vector3(0, -100, 0);
-    private List<Deed> _sinsFound = new List<Deed>();
-    private List<Deed> _virtuesFound = new List<Deed>();
+    private readonly Vector3 _deedOffset = new Vector3(0, -100, 0);
     private SoulFacts _soulFacts;
 
-    public void OpenJournal(SoulFacts soulFacts, List<Deed> sinsFound, List<Deed> virtuesFound)
+    private void Start()
+    {
+        _journalPanel.SetActive(false);
+    }
+
+    public void OpenJournal(SoulFacts soulFacts)
     {
         _playerState.EnterJournal();
         _soulFacts = soulFacts;
-        _sinsFound = sinsFound;
-        _virtuesFound = virtuesFound;
-
         _journalPanel.SetActive(true);
         ShowFoundedDeeds();
+        _dialogueFactView.TryDisplayJournalFact();
     }
 
     public void ChooseFate(int fateValue)
@@ -48,16 +40,29 @@ public class FateJournal : MonoBehaviour
         _resultPanel.OpenResultPanel(rightFate, isPLayerRight);
 
         _journalPanel.SetActive(false);
+        _dialogueFactView.HideJournalFactText();
+        ClearDeedsList();
+        _deedsFinding.ClearFoundDeeds();
     }
 
-    private void Start()
+    private void ClearDeedsList()
     {
-        _journalPanel.SetActive(false);
+        foreach (Transform sin in _sinInitialTransform)
+        {
+            Destroy(sin.gameObject);
+        }
+
+        foreach (Transform virtue in _virtueInitialTransform)
+        {
+            Destroy(virtue.gameObject);
+        }
     }
 
-    private bool CheckResult(Fate playerDecision, out Fate rightFate)
+    private bool CheckResult(
+        Fate playerDecision, 
+        out Fate rightFate)
     {
-        int properFatePoints = _soulFacts.GetWeightResult();
+        var properFatePoints = _soulFacts.GetWeightResult();
         rightFate = CalculateFate(properFatePoints);
         
         return Math.Abs((int)rightFate - (int)playerDecision) <= 3;
@@ -65,23 +70,40 @@ public class FateJournal : MonoBehaviour
 
     private void ShowFoundedDeeds()
     {
-        for (int i = 0; i < _sinsFound.Count; i++)
+        FillJournalWithDeeds(
+            _deedsFinding.SinsFound,
+            _sinPrefab,
+            _sinInitialTransform);
+
+        FillJournalWithDeeds(
+            _deedsFinding.VirtuesFound,
+            _virtuePrefab,
+            _virtueInitialTransform);
+    }
+
+    private void FillJournalWithDeeds(
+        IEnumerable<Deed> deedsFound,
+        GameObject deedPrefab,
+        Transform deedInitialTransform)
+    {
+        var deedPosition = 0;
+        foreach (var deedFound in deedsFound)
         {
-            GameObject sin = Instantiate(_sinPrefab, _sinTransform.position + _deedOffset * i, Quaternion.identity, _sinTransform);
-            TextMeshProUGUI[] text = sin.GetComponentsInChildren<TextMeshProUGUI>();
-            text[0].text = _sinsFound[i].GetDescription();
-        }
-        for (int i = 0; i < _virtuesFound.Count; i++)
-        {
-            GameObject virtue = Instantiate(_virtuePrefab, _virtueTransform.position + _deedOffset * i, Quaternion.identity, _virtueTransform);
-            TextMeshProUGUI[] text = virtue.GetComponentsInChildren<TextMeshProUGUI>();
-            text[0].text = _virtuesFound[i].GetDescription();
+            var deedGameObject = Instantiate(
+                deedPrefab,
+                deedInitialTransform.position + _deedOffset * deedPosition,
+                Quaternion.identity,
+                deedInitialTransform);
+
+            var tmpGUI = deedGameObject.GetComponentInChildren<TextMeshProUGUI>();
+            tmpGUI.text = deedFound.GetDescription();
+            deedPosition++;
         }
     }
 
     private Fate CalculateFate(int fatePoints)
     {
-        int clampedFate = (int)Fate.Righteous;
+        var clampedFate = (int)Fate.Righteous;
         while (fatePoints < clampedFate)
         {
             clampedFate -= 3;

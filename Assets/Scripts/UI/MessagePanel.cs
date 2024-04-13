@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MessagePanel : MonoBehaviour
 {
-    [SerializeField] private PlayerState _playerState;
+    [SerializeField] private PlayerStateMutable _playerState;
     [SerializeField] private GameObject _messagePanel;
     [SerializeField] private TextMeshProUGUI _messageText;
 

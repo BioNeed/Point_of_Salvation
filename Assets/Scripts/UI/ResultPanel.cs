@@ -4,7 +4,7 @@ using UnityEngine;
 public class ResultPanel : MonoBehaviour
 {
     [SerializeField] private SceneController _sceneController;
-    [SerializeField] private PlayerState _playerState;
+    [SerializeField] private PlayerStateMutable _playerState;
     [SerializeField] private GameObject _resultPanel;
     [SerializeField] private TextMeshProUGUI _resultText;
 

@@ -72,7 +72,7 @@ public class Soul : MonoBehaviour
         _dialogIndicator.SetActive(false);
     }
 
-    public string GetSoulFact(int index)
+    public Fact GetSoulFact(int index)
     {
         return _soulFacts.GetFact(index);
     }

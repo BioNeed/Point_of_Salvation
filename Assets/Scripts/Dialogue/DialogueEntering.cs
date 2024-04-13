@@ -9,14 +9,14 @@ public class DialogueEntering : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Jump") 
-                && _nearbySoul != null 
+        if (Input.GetButtonDown("Jump")
+                && _nearbySoul != null
                 && _playerState.CanEnterDialogue)
         {
             _nearbySoul.DialogIndicatorOff();
             _preDialogue.StartPreDialogue(_nearbySoul);
-            _playerState.EnterDialogue();
         }
+
     }
 
     private void OnTriggerEnter(Collider other)
