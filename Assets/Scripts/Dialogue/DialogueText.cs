@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class DialogueText : MonoBehaviour
 {
+    [SerializeField] private CurrentSoulContext _currentSoulContext;
     [SerializeField] private DialogueFactView _dialogueFactView;
     [SerializeField] private DeedsFinding _deedsFinding;
     [SerializeField] private DialogueChoices _dialogueChoices;
@@ -35,10 +36,10 @@ public class DialogueText : MonoBehaviour
         }
     }
 
-    public void StartDialogue(Soul soul)
+    public void StartDialogue()
     {
-        _dialogueSoul = soul;
-        _dialogueStory = new Story(soul.GetDialogue().text);
+        _dialogueSoul = _currentSoulContext.CurrentSoul;
+        _dialogueStory = new Story(_dialogueSoul.Dialogues.DialogueJsonText);
         ContinueStory();
     }
 
@@ -74,18 +75,19 @@ public class DialogueText : MonoBehaviour
                 else if (tag.StartsWith("Fact."))
                 {
                     var factNum = int.Parse(tag.Substring("Fact.".Length, tag.Length - "Fact.".Length));
-                    _dialogueFactView.SetFoundFact(_dialogueSoul.GetSoulFact(factNum));
+                    _deedsFinding.FoundFact = _dialogueSoul.Facts.GetFact(factNum);
+                    _dialogueFactView.DisplayFactInDialogue();
                 }
                 else if (tag.StartsWith("Sin."))
                 {
                     var sinNum = int.Parse(tag.Substring("Sin.".Length, tag.Length - "Sin.".Length));
-                    _deedsFinding.AddFoundSin(_dialogueSoul.GetSoulSin(sinNum));
+                    _deedsFinding.AddFoundSin(_dialogueSoul.Facts.GetSin(sinNum));
                     //TODO всплывающее сообщение "Найден грех"
                 }
                 else if (tag.StartsWith("Virtue."))
                 {
                     var virtueNum = int.Parse(tag.Substring("Virtue.".Length, tag.Length - "Virtue.".Length));
-                    _deedsFinding.AddFoundVirtue(_dialogueSoul.GetSoulVirtue(virtueNum));
+                    _deedsFinding.AddFoundVirtue(_dialogueSoul.Facts.GetVirtue(virtueNum));
                     //TODO всплывающее сообщение "Найдена добродетель"
                 }
             }

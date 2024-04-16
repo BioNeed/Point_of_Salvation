@@ -13,6 +13,8 @@ public abstract class PlayerState : MonoBehaviour
 
     public bool IsInDialogue => _playerStates == PlayerStates.InDialogue;
 
+    public bool IsInJournalResultPanel => _playerStates == PlayerStates.InJournalResultPanel;
+
     public bool IsInMessagePanel => _playerStates == PlayerStates.InMessagePanel;
 
     protected IEnumerator ChangeStateWithDelay(PlayerStates newPlayerState)

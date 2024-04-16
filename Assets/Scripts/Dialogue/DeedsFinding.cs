@@ -10,6 +10,8 @@ public class DeedsFinding : MonoBehaviour
 
     public IEnumerable<Deed> SinsFound => _sinsFound;
 
+    public Fact FoundFact { get; set; }
+
     public void AddFoundVirtue(Deed foundVirtue)
     {
         _virtuesFound.Add(foundVirtue);
@@ -24,5 +26,6 @@ public class DeedsFinding : MonoBehaviour
     {
         _virtuesFound.Clear();
         _sinsFound.Clear();
+        FoundFact = null;
     }
 }

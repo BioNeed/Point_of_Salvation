@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class SoulFacts
+public class SoulFacts : MonoBehaviour
 {
-    [SerializeField] private List<string> _factsOffContext;
+    [SerializeField] private List<Fact> _facts;
     [SerializeField] private List<Deed> _sins;
     [SerializeField] private List<Deed> _virtues;
 
     public Fact GetFact(int index)
     {
-        return new Fact(_factsOffContext[index]);
+        return _facts[index];
     }
 
     public Deed GetSin(int index)
@@ -29,12 +27,12 @@ public class SoulFacts
         var result = 0;
         foreach (var virtue in _virtues)
         {
-            result += virtue.GetWeight();
+            result += virtue.Weight;
         }
 
         foreach (var sin in _sins)
         {
-            result -= sin.GetWeight();
+            result -= sin.Weight;
         }
 
         return result;

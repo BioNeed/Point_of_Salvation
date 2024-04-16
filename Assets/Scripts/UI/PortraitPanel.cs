@@ -3,17 +3,17 @@ using UnityEngine.UI;
 
 public class PortraitPanel : MonoBehaviour
 {
+    [SerializeField] private CurrentSoulContext _currentSoulContext;
     [SerializeField] private Image _soulColorImage;
     [SerializeField] private Text _occupationText;
     [SerializeField] private Text _distinctiveText;
 
-    private Color _soulColor;
-
-    public void DisplaySoulPortret(Soul soul)
+    public void DisplaySoulPortret()
     {
-        _soulColor = soul.GetColor();
-        _soulColorImage.color = new Color(_soulColor.r, _soulColor.g, _soulColor.b);
-        _occupationText.text = "Занятие - " + soul.GetOccupation();
-        _distinctiveText.text = "Особенность - " + soul.GetDistinctive();
+        var soulPortraitInfo = _currentSoulContext.CurrentSoul.PortraitInfo;
+        var color = soulPortraitInfo.MouseOverColor;
+        _soulColorImage.color = new Color(color.r, color.g, color.b);
+        _occupationText.text = soulPortraitInfo.Occupation;
+        _distinctiveText.text = soulPortraitInfo.DistinctiveFeature;
     }
 }

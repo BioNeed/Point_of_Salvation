@@ -16,7 +16,9 @@ public class PreDialogue : MonoBehaviour
 
     private void Update()
     {
-        if (_playerState.IsInPreDialogue == true && Input.GetButtonDown("Submit"))
+        if (_playerState.IsInPreDialogue == true 
+                && !_preDialogueButtons.AreButtonsActive
+                && Input.GetButtonDown("Submit"))
         {
             ContinuePreDialogue();
         }
@@ -26,7 +28,7 @@ public class PreDialogue : MonoBehaviour
     {
         _soul = soul;
         _playerState.EnterPreDialogue();
-        _preDialogueStory = new Story(soul.GetPreDialogue().text);
+        _preDialogueStory = new Story(soul.Dialogues.PreDialogueJsonText);
         TogglePreDialogue(true);
         ContinuePreDialogue();
     }
@@ -44,6 +46,7 @@ public class PreDialogue : MonoBehaviour
         }
         else
         {
+            Debug.Log("Initializing buttons");
             _preDialogueButtons.InitializePreDialogueButtons(_soul);
         }
     }

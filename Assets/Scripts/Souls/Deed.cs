@@ -7,13 +7,7 @@ public class Deed
     [SerializeField] private string _description;
     [SerializeField] private int _weight;
 
-    public int GetWeight()
-    {
-        return _weight;
-    }
+    public string Description => _description;
 
-    public string GetDescription()
-    {
-        return _description;
-    }
+    public int Weight => _weight;
 }

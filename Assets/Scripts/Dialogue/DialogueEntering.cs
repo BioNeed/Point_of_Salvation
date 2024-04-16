@@ -13,30 +13,31 @@ public class DialogueEntering : MonoBehaviour
                 && _nearbySoul != null
                 && _playerState.CanEnterDialogue)
         {
-            _nearbySoul.DialogIndicatorOff();
+            _nearbySoul.DialogueIndicator.TurnOff();
             _preDialogue.StartPreDialogue(_nearbySoul);
+            _nearbySoul = null;
         }
-
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_nearbySoul == null 
-                && other.TryGetComponent(out Soul soul) == true 
+        if (other.TryGetComponent(out Soul soul) == true 
+                && _nearbySoul == null
                 && soul.CanTalk == true)
         {
             _nearbySoul = soul;
-            _nearbySoul.DialogIndicatorOn();
+            _nearbySoul.DialogueIndicator.TurnOn();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (_nearbySoul != null)
+        if (other.TryGetComponent(out Soul soul) == true
+                && _nearbySoul == soul
+                && soul.CanTalk == true)
         {
-            _nearbySoul.DialogIndicatorOff();
+            _nearbySoul.DialogueIndicator.TurnOff();
+            _nearbySoul = null;
         }
-
-        _nearbySoul = null;
     }
 }

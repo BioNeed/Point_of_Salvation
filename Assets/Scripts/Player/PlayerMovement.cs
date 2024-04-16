@@ -43,7 +43,9 @@ public class PlayerMovement : MonoBehaviour
         var axisVer = Input.GetAxis("Vertical");
         if (axisHor != 0 || axisVer != 0)
         {
-            horizontalMovement = new Vector3(axisHor, 0, axisVer) * _speed * Time.deltaTime;
+            var rawMovement = new Vector3(axisHor, 0, axisVer);
+            var clampedMovement = Vector3.ClampMagnitude(rawMovement, Vector3.forward.magnitude);
+            horizontalMovement = clampedMovement * _speed * Time.deltaTime;
             _qRotation = Quaternion.LookRotation(horizontalMovement, Vector3.up);
         }
 

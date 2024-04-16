@@ -11,6 +11,13 @@ public class PreDialogueButtons : MonoBehaviour
 
     private Soul _soul;
 
+    public bool AreButtonsActive => _startDialogueButton.isActiveAndEnabled && _exitPreDialogueButton.isActiveAndEnabled;
+
+    private void Start()
+    {
+        ToggleButtons(false);
+    }
+
     public void InitializePreDialogueButtons(Soul soul)
     {
         _soul = soul;
@@ -21,7 +28,6 @@ public class PreDialogueButtons : MonoBehaviour
     {
         _startDialogueButton.onClick.AddListener(OnStartDialogueButtonClicked);
         _exitPreDialogueButton.onClick.AddListener(OnExitPreDialogueButtonClicked);
-        ToggleButtons(false);
     }
 
     private void OnDisable()
@@ -39,6 +45,7 @@ public class PreDialogueButtons : MonoBehaviour
 
     private void OnExitPreDialogueButtonClicked()
     {
+        Debug.Log("Exit button clicked");
         _preDialogue.TogglePreDialogue(false);
         ToggleButtons(false);
         _playerState.FreePlayer();

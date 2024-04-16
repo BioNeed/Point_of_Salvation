@@ -14,6 +14,11 @@ GameObject:
   - component: {fileID: 5079121902470347236}
   - component: {fileID: 5079121902470347243}
   - component: {fileID: 5079121902470347240}
+  - component: {fileID: 3189364245158677840}
+  - component: {fileID: 2079092517476607210}
+  - component: {fileID: 6915320209307426301}
+  - component: {fileID: 7690089345754931804}
+  - component: {fileID: 2718812390132261928}
   m_Layer: 0
   m_Name: Soul
   m_TagString: Untagged
@@ -108,7 +113,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 1.1
   m_Height: 1.11
   m_Direction: 1
   m_Center: {x: 0, y: 0.55, z: 0}
@@ -142,37 +147,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f961c16f12d5ca41b99aef36a3a56f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mouseOverColor: {r: 0, g: 1, b: 0.059348106, a: 0}
-  _occupation: "\u0424\u0435\u0440\u043C\u0435\u0440"
-  _distinctiveFeature: "\u041D\u0435\u043D\u0430\u0432\u0438\u0434\u0438\u0442 \u043F\u0442\u0438\u0446"
-  _dialogIndicator: {fileID: 5079121902614681034}
-  _soulFacts:
-    _factsOffContext:
-    - Charmander is strong
-    - Bulbasaur never afraid
-    - Squirtle can scare enemies
-    _sins:
-    - _description: "\u041E\u0431\u0438\u0434\u0435\u043B\u0430 \u043A\u043E\u0448\u043A\u0443
-        \u0432 \u0434\u0435\u0442\u0441\u0442\u0432\u0435"
-      _weight: 1
-    - _description: "\u041F\u0440\u043E\u044F\u0432\u043B\u044F\u043B\u0430 \u0430\u0433\u0440\u0435\u0441\u0441\u0438\u044E
-        \u043A \u0440\u043E\u0434\u0438\u0442\u0435\u043B\u044F\u043C"
-      _weight: 3
-    _virtues:
-    - _description: "\u041F\u0440\u043E\u044F\u0432\u043B\u044F\u043B\u0430 \u0438\u0441\u0442\u0438\u043D\u043D\u0443\u044E
-        \u0437\u0430\u0431\u043E\u0442\u0443 \u0438 \u043B\u044E\u0431\u043E\u0432\u044C
-        \u043A \u0440\u0435\u0431\u0435\u043D\u043A\u0443"
-      _weight: 3
-    - _description: "\u041D\u0435 \u043F\u0440\u043E\u0445\u043E\u0434\u0438\u043B\u0430
-        \u043C\u0438\u043C\u043E \u043D\u0443\u0436\u0434\u0430\u044E\u0449\u0438\u0445\u0441\u044F
-        \u0432 \u043F\u043E\u043C\u043E\u0449\u0438"
-      _weight: 2
-    - _description: "\u0421\u043F\u0430\u0441\u043B\u0430 \u0436\u0438\u0437\u043D\u0438
-        \u043B\u044E\u0434\u0435\u0439 \u043D\u0430 \u0432\u043E\u0439\u043D\u0435"
-      _weight: 7
   _canTalk: 1
-  _jsonDialogue: {fileID: 4900000, guid: 3b51cddb6faa27344b11695bfa3a548a, type: 3}
-  _jsonPreDialogue: {fileID: 4900000, guid: 3e99abfc5d277bf47a35919cc538a438, type: 3}
+--- !u!114 &3189364245158677840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5079121902470347237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 179c0f988e7c20042a4ffee0baa018a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogIndicator: {fileID: 5079121902614681034}
+--- !u!114 &2079092517476607210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5079121902470347237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2c4f05f74b13ef42bb373d3ab769545, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mouseOverColor: {r: 0, g: 0, b: 0, a: 0}
+  _occupation: 
+  _distinctiveFeature: 
+--- !u!114 &6915320209307426301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5079121902470347237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c37f3e0c66b2a9947b1afbc6fec7cf62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7690089345754931804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5079121902470347237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c8baab87712aa24db95ec0d91acfb2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _facts: []
+  _sins: []
+  _virtues: []
+--- !u!114 &2718812390132261928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5079121902470347237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 521b78c794304e1428537ab132148cc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _jsonDialogue: {fileID: 0}
+  _jsonPreDialogue: {fileID: 0}
 --- !u!1 &5079121902604696886
 GameObject:
   m_ObjectHideFlags: 0

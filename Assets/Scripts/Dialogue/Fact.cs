@@ -1,9 +1,10 @@
-﻿public class Fact
-{
-    public Fact(string description)
-    {
-        Description = description;
-    }
+﻿using System;
+using UnityEngine;
 
-    public string Description { get; }
+[Serializable]
+public class Fact
+{
+    [SerializeField] private string _description;
+
+    public string Description => _description;
 }
