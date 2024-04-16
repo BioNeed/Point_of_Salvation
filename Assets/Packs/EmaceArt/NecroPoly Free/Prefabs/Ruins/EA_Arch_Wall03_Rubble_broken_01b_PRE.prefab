@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1460168696995133638}
   - component: {fileID: 2588536403025803107}
   - component: {fileID: 290661865528607657}
+  - component: {fileID: 8479915058323378523}
   m_Layer: 0
   m_Name: EA_Arch_Wall03_Rubble_broken_01b_PRE
   m_TagString: Untagged
@@ -28,6 +29,7 @@ Transform:
   m_LocalRotation: {x: -0.010739962, y: 1.5503908e-18, z: -1.7334761e-17, w: 0.99994236}
   m_LocalPosition: {x: -71.69415, y: -8.63, z: 65.88254}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -51,10 +53,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -79,3 +83,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8479915058323378523
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2236141793319740028}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.2026467, y: 2.3413174, z: 1.6671252}
+  m_Center: {x: -0.3706637, y: 1.1683503, z: 0.65510345}

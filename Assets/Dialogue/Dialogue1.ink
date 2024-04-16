@@ -6,7 +6,7 @@ Which pokemon do you choose?#KeyWord.pokemon #KeyWord.you #KeyWord.choose #Sin.0
         -> chosen("Charmander")
     * [Bulbasaur] #Fact.1
         -> chosen("Bulbasaur")
-    * [Squirtle]
+    * [Squirtle] #Fact.2
         -> chosen("Squirtle")
         
 === chosen(pokemon) ===

@@ -33,7 +33,7 @@ public class JournalPanel : MonoBehaviour
             _virtuePrefab,
             _virtueInitialTransform);
 
-        _factInJournalTMPGUI.text = _deedsFinding.FoundFact.Description;
+        _factInJournalTMPGUI.text = _deedsFinding.FoundFact?.Description;
     }
 
     public void ClearJournalInfo()
