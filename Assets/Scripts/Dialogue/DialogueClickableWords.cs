@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DialogueClickableWords : MonoBehaviour
 {
     [SerializeField] private DialogueChoices _dialogueChoices;
     [SerializeField] private PlayerState _playerState;
-    [SerializeField] private DialogueText _dialogueText;    
-    [SerializeField] private List<string> _clickableWords = new List<string>();
+    [SerializeField] private DialogueText _dialogueText;
+    [SerializeField] private ClickableWordsCounterView _clickableWordsCounterView;
+
+    private List<ClickableWord> _clickableWords = new ();
 
     public void ClearWords()
     {
@@ -15,7 +18,12 @@ public class DialogueClickableWords : MonoBehaviour
 
     public void AddWord(string newWord)
     {
-        _clickableWords.Add(newWord);
+        _clickableWords.Add(new ClickableWord(newWord));
+    }
+
+    public void DisplayClickableWordsCount()
+    {
+        _clickableWordsCounterView.DisplayWordsLeft(_clickableWords.Count);
     }
 
     private void OnGUI()
@@ -28,7 +36,12 @@ public class DialogueClickableWords : MonoBehaviour
             var dialogueText = _dialogueText.Text.ToUpper();
             for (int i = 0; i < _clickableWords.Count; i++)
             {
-                var clickableWord = _clickableWords[i].ToUpper();
+                if (_clickableWords[i].IsFound)
+                {
+                    continue;
+                }
+
+                var clickableWord = _clickableWords[i].Word.ToUpper();
                 if (string.IsNullOrEmpty(clickableWord))
                 {
                     continue;
@@ -41,7 +54,11 @@ public class DialogueClickableWords : MonoBehaviour
                     if (intersectedCharIndex > clickableWordStartIndex
                             && intersectedCharIndex < clickableWordEndIndex)
                     {
+                        _clickableWords[i].MarkAsFound();
                         _dialogueChoices.DisplayChoice(i);
+
+                        var wordsFoundCount = _clickableWords.Where(cw => cw.IsFound).Count();
+                        _clickableWordsCounterView.DisplayWordsLeft(_clickableWords.Count, wordsFoundCount);
                         //string temp = _dialogueTextText.text;
                         //_dialogueTextText.text = "";
                         //int keyWordStart = temp.IndexOf(clickableWord);

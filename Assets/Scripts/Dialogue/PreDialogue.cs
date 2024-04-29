@@ -46,7 +46,6 @@ public class PreDialogue : MonoBehaviour
         }
         else
         {
-            Debug.Log("Initializing buttons");
             _preDialogueButtons.InitializePreDialogueButtons(_soul);
         }
     }

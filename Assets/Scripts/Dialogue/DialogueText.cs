@@ -82,15 +82,15 @@ public class DialogueText : MonoBehaviour
                 {
                     var sinNum = int.Parse(tag.Substring("Sin.".Length, tag.Length - "Sin.".Length));
                     _deedsFinding.AddFoundSin(_dialogueSoul.Facts.GetSin(sinNum));
-                    //TODO всплывающее сообщение "Найден грех"
                 }
                 else if (tag.StartsWith("Virtue."))
                 {
                     var virtueNum = int.Parse(tag.Substring("Virtue.".Length, tag.Length - "Virtue.".Length));
                     _deedsFinding.AddFoundVirtue(_dialogueSoul.Facts.GetVirtue(virtueNum));
-                    //TODO всплывающее сообщение "Найдена добродетель"
                 }
             }
+
+            _dialogueClickableWords.DisplayClickableWordsCount();
         }
         else
         {
