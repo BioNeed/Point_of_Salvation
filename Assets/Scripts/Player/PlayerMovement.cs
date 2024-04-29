@@ -21,11 +21,11 @@ public class PlayerMovement : MonoBehaviour
         _moveDirection = CalculateHorizontalMovement();
         _moveDirection.y = CalculateVerticalMovement();
         transform.rotation = _qRotation;
-        _charController.Move(_moveDirection);    }
+        _charController.Move(_moveDirection);    
+    }
 
     private float CalculateVerticalMovement()
     {
-        _fallingSpeed = 0f;
         if (_charController.isGrounded)
         {
             _fallingSpeed = 0f;

@@ -27,17 +27,35 @@ public class DialogueEntering : MonoBehaviour
         {
             _nearbySoul = soul;
             _nearbySoul.DialogueIndicator.TurnOn();
+            StopSoulMovement(soul);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out Soul soul) == true
-                && _nearbySoul == soul
-                && soul.CanTalk == true)
+        if (other.TryGetComponent(out Soul soul) == true)
         {
-            _nearbySoul.DialogueIndicator.TurnOff();
-            _nearbySoul = null;
+            if (_nearbySoul is not null && soul.CanTalk)
+            {
+                _nearbySoul.DialogueIndicator.TurnOff();
+                _nearbySoul = null;
+            }
+
+            RotateSoul(soul);
         }
+    }
+
+    private static void RotateSoul(Soul soul)
+    {
+        var soulMovementStrategyGenerator = soul.GetComponent<SoulMovementStrategyGenerator>();
+        soulMovementStrategyGenerator.SetStrategyByState(SoulStates.Rotating);
+    }
+
+    private static void StopSoulMovement(Soul soul)
+    {
+        var soulMovementStrategyGenerator = soul.GetComponent<SoulMovementStrategyGenerator>();
+        var soulMovement = soul.GetComponent<SoulMovement>();
+        var newMovementStrategy = new StayingSoulStrategy(soulMovement, float.MaxValue);
+        soulMovementStrategyGenerator.SetStrategy(newMovementStrategy);
     }
 }
