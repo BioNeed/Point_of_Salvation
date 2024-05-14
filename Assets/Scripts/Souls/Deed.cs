@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class Deed
 {
-    [SerializeField] private string _description;
+    [TextArea] [SerializeField] private string _description;
     [SerializeField] private int _weight;
 
     public string Description => _description;

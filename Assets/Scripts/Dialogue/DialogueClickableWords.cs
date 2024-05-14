@@ -23,6 +23,14 @@ public class DialogueClickableWords : MonoBehaviour
 
     public void DisplayClickableWordsCount()
     {
+        if (_dialogueText.CurrentChoices.Count > 0
+                && _clickableWords.Count == 0)
+        {
+            _clickableWordsCounterView.ClearText();
+            _dialogueChoices.DisplayAllChoices();
+            return;
+        }
+
         _clickableWordsCounterView.DisplayWordsLeft(_clickableWords.Count);
     }
 

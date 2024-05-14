@@ -43,6 +43,11 @@ public class FateJournal : MonoBehaviour
 
     private Fate CalculateFate(int fatePoints)
     {
+        if (fatePoints < (int)Fate.BurnInHell)
+        {
+            return Fate.BurnInHell;
+        }
+
         var clampedFate = (int)Fate.Righteous;
         while (fatePoints < clampedFate)
         {

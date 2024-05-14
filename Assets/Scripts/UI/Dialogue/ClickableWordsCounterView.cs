@@ -27,6 +27,11 @@ public class ClickableWordsCounterView : MonoBehaviour
         _clickableWordsCounter.text = $"Ключевые слова {wordsFound}/{wordsCount}";
     }
 
+    public void ClearText()
+    {
+        _clickableWordsCounter.text = "";
+    }
+
     private void DisplayMessageToContinue()
     {
         _clickableWordsCounter.color = _standardColor;

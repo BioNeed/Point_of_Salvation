@@ -12,7 +12,7 @@ public class JournalPanel : MonoBehaviour
     [SerializeField] private GameObject _virtuePrefab;
     [SerializeField] private TextMeshProUGUI _factInJournalTMPGUI;
 
-    private readonly Vector3 _deedOffset = new Vector3(0, -100, 0);
+    private readonly Vector3 _deedOffset = new Vector3(0, -140, 0);
 
     private void Start()
     {

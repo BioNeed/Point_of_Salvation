@@ -1,4 +1,13 @@
--> main
+-> premain
+
+=== premain ===
+Test of displaying all choices...
+    * [Choice 1]
+        -> main
+    * [Bla-bla-bla]
+        -> main
+    * [Choice 3]
+        -> main
 
 === main ===
 Which pokemon do you choose?#KeyWord.pokemon #KeyWord.you #KeyWord.choose #Sin.0 #Sin.1
@@ -11,4 +20,7 @@ Which pokemon do you choose?#KeyWord.pokemon #KeyWord.you #KeyWord.choose #Sin.0
         
 === chosen(pokemon) ===
 You chose {pokemon}! #Virtue.0 #Virtue.1
+    -> ending()
+
+=== ending ===
 -> END
