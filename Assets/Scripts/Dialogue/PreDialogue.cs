@@ -14,6 +14,11 @@ public class PreDialogue : MonoBehaviour
     private Soul _soul;
     private Story _preDialogueStory;
 
+    private void Start()
+    {
+        TogglePreDialogue(false);
+    }
+
     private void Update()
     {
         if (_playerState.IsInPreDialogue == true 
