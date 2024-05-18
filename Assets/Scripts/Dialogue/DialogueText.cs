@@ -43,8 +43,9 @@ public class DialogueText : MonoBehaviour
         ContinueStory();
     }
 
-    public void ChooseDialogueChoice(int choiceIndex)
+    public IEnumerator ChooseDialogueChoice(int choiceIndex)
     {
+        yield return new WaitForEndOfFrame();
         _dialogueStory.ChooseChoiceIndex(choiceIndex);
         ContinueStory();
     }

@@ -24,7 +24,7 @@ public class DialogueChoices : MonoBehaviour
 
     public void OnChoiceButtonClicked(int choiceIndex)
     {
-        _dialogueText.ChooseDialogueChoice(choiceIndex);
+        StartCoroutine(_dialogueText.ChooseDialogueChoice(choiceIndex));
     }
 
     public void HideChoices()
