@@ -7,7 +7,7 @@ public class CursorVisibility : MonoBehaviour
 
     private void Start()
     {
-        Cursor.visible = _visibleCursor;
-        Cursor.SetCursor(PlayerSettings.defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
+        //Cursor.visible = _visibleCursor;
+        //Cursor.SetCursor(PlayerSettings.defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
     }
 }

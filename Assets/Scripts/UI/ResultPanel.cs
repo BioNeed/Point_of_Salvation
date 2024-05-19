@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ResultPanel : MonoBehaviour
 {
-    [SerializeField] private ExperienceProgress _experienceProgress;
+    //[SerializeField] private ExperienceProgress _experienceProgress;
     [SerializeField] private SoulOrdering _soulOrdering;
     [SerializeField] private PlayerStateMutable _playerState;
     [SerializeField] private GameObject _resultPanel;
@@ -22,7 +22,7 @@ public class ResultPanel : MonoBehaviour
             _resultPanel.SetActive(false);
             _playerState.FreePlayer();
             _soulOrdering.NextSoul();
-            _experienceProgress.GainExperienceForSoul();
+            //_experienceProgress.GainExperienceForSoul();
         }
     }
 
