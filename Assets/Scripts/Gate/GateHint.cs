@@ -10,29 +10,34 @@ public class GateHint : MonoBehaviour
     private bool _mustBeDisplayed = true;
     private bool _isTurnedOn = true;
 
-    public void TryShowHint(bool hasKey)
+    private void OnTriggerEnter(Collider other)
     {
-        if (hasKey)
+        if (other.TryGetComponent(out GateEntering gateEntering) == true)
         {
-            foreach (var gateToOpen in _gatesToOpen)
+            if (gateEntering.HasKey)
             {
-                gateToOpen.Open();
+                foreach (var gateToOpen in _gatesToOpen)
+                {
+                    gateToOpen.Open();
+                }
+
+                _mustBeDisplayed = false;
+                _isTurnedOn = false;
+                _gateHintIndicator.SetActive(false);
+                return;
             }
-
-            return;
-        }
-
-        if (_mustBeDisplayed == true && _isTurnedOn == true)
-        {
-            _isTurnedOn = false;
-            _gateHintIndicator.SetActive(false);
-            _messagePanel.OpenMessagePanel(_messageToFindKey);
+            else if (_mustBeDisplayed == true && _isTurnedOn == true)
+            {
+                _isTurnedOn = false;
+                _gateHintIndicator.SetActive(false);
+                _messagePanel.OpenMessagePanel(_messageToFindKey);
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out Player _) == true
+        if (other.TryGetComponent(out GateEntering _) == true
             && _mustBeDisplayed == true
             && _isTurnedOn == false)
         {

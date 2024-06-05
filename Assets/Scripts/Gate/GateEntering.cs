@@ -1,19 +1,13 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Gate
+public class GateEntering : MonoBehaviour
 {
-    public class GateEntering : MonoBehaviour
+    private bool _hasKey = false;
+
+    public bool HasKey => _hasKey;
+
+    public void FoundKey()
     {
-        [SerializeField] private GateHint _gateHint;
-
-        private bool _hasKey = false;
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.TryGetComponent(out GateHint gateHint) == true)
-            {
-                gateHint.TryShowHint(_hasKey);
-            }
-        }
+        _hasKey = true;
     }
 }
